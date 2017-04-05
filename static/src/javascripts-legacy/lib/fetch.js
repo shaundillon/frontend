@@ -65,7 +65,8 @@ define([
 
         return {
             url: path,
-            type: 'text',
+            type: options.type || 'text',
+            contentType: options.contentType,
             method: options.method || 'GET',
             crossOrigin: isCors,
             headers: options.headers,
