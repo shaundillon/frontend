@@ -1,9 +1,11 @@
 define([
     'reqwest',
-    'Promise'
+    'Promise',
+    'lib/config'
 ], function (
     reqwest,
-    Promise
+    Promise,
+    config
 ) {
     /**
      * Provide a minimal function equivalent to fetch. I don't dare calling it a
@@ -30,8 +32,15 @@ define([
      * - response.ok .status .statusText
      */
     function fetch (input, init) {
+        var path = input;
+
+        if (!path.match('^(https?:)?//')) {
+            path = (config.page.ajaxUrl || '') + path;
+            init.mode = 'cors';
+        }
+
         return new Promise(function(resolve, reject) {
-            var req = buildRequest(input, init || {});
+            var req = buildRequest(path, init || {});
             reqwest(req)
             .then(function (resp) {
                 resolve(createResponse(resp));
