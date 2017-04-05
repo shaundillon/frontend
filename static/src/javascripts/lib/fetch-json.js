@@ -1,5 +1,4 @@
 // @flow
-import config from 'lib/config';
 import fetch from 'lib/fetch';
 
 const json = (input: string | Request, init: RequestOptions = {}) => {
